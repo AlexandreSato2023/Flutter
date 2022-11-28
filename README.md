@@ -7,7 +7,7 @@
 
 <br>
 
-## Clean Architecture
+# Clean Architecture
 
 ### Robert C. Martin foi o criador da Clean Architecture, que é uma das filosofias de arquiteturas disponíveis para o desenvolvimento de softwares. Com essa abordagem conseguimos produzir sistemas mais simples de testar de forma isolada e ao mesmo tempo, ficando mais independente de frameworks, UI, banco de dados e de qualquer agente externo.
 
@@ -81,11 +81,48 @@ ImageDogBloc({required this.getImageDogUseCase}) : super(EmptyState()) {
 }
 ```
 
-https://atomicdesign.bradfrost.com/
+## Injeção de Dependência
 
-* Dartz / Either
-* Consumo de API Reast
-* Injeção de Dependência (GetIt)
-* TDD - testes unitários 
-* Testes com Coverage
-* Mock com [Mockito](https://pub.dev/packages/mockito)
+### Utilização do package GetIt para melhorar o desacoplamento do aplicativo e auxiliar na realização dos testes unitários
+
+```dart
+  serviceLocator.registerLazySingleton<ImageDogRepository>(
+    () => ImageDogRepositoryImpl(dataSource: serviceLocator()),
+  );
+```
+<br>
+
+## Testes
+### TDD - testes unitários 
+### Testes com Coverage
+
+```dart
+ test(
+    'deve obter uma imagem do repositorio',
+    () async {
+      when(repository.getImageDog()).thenAnswer((_) async => Right(vModel));
+
+      final result = await usecase(NoParams());
+
+      expect(result, Right(vModel));
+      verify(repository.getImageDog());
+    
+    },
+  );
+```
+### Mock com [Mockito](https://pub.dev/packages/mockito)
+
+```dart
+test(
+      'deve retornar uma imagem de cachorro com sucesso',
+      () async {
+        when(datasourceMock.getImageDog()).thenAnswer((_) async => vModel);
+
+        final result = await repositoryMock.getImageDog();
+
+        verify(datasourceMock.getImageDog());
+
+        expect(result, equals(Right(vModel)));
+      },
+    );
+```
