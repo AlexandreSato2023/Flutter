@@ -45,7 +45,7 @@ https://blog.cleancoder.com
 
 ## Design System (Atomic Design)
 
-### O Atomic Design é uma metodologia criada por Brad Frost e que utiliza elementos da químida, como atomos e moléculas, para criar e separar elementos que são aplicados no design de interfaces.
+### O Atomic Design é uma metodologia criada por Brad Frost e que utiliza elementos da química, como atomos e moléculas, para criar e separar elementos que são aplicados no design de interfaces.
 
 ### https://atomicdesign.bradfrost.com/
 
