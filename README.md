@@ -9,6 +9,10 @@
 
 ## Clean Architecture
 
+### Robert C. Martin foi o criador da Clean Architecture, que é uma das filosofias de arquiteturas disponíveis para o desenvolvimento de softwares. Com essa abordagem conseguimos produzir sistemas mais simples de testar de forma isolada e ao mesmo tempo, ficando mais independente de frameworks, UI, banco de dados e de qualquer agente externo.
+
+<br>
+
 <img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" width="500"> 
 
 https://blog.cleancoder.com
