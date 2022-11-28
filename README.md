@@ -7,7 +7,7 @@
 
 <br>
 
-## Clean Architecture
+# Clean Architecture
 
 ### Robert C. Martin foi o criador da Clean Architecture, que é uma das filosofias de arquiteturas disponíveis para o desenvolvimento de softwares. Com essa abordagem conseguimos produzir sistemas mais simples de testar de forma isolada e ao mesmo tempo, ficando mais independente de frameworks, UI, banco de dados e de qualquer agente externo.
 
@@ -39,19 +39,90 @@ https://blog.cleancoder.com
     - ImageDogPage.dart
     features -> image_dog -> data -> repositories
     - ImageDogRepositoryImpl.dart
-    features -> image_dog -> data -> datasources
-    - ImageDogDataSourceImpl.dart
-
-
 <br>
 
-## Tecnologia e recursos utilizados
+# Tecnologia e recursos utilizados
 
-* Gerenciamento de estado BloC
-* Design System (Atomic Design)
-* Dartz / Either
-* Consumo de API Reast
-* Injeção de Dependência (GetIt)
-* TDD - testes unitários 
-* Testes com Coverage
-* Mock com [Mockito](https://pub.dev/packages/mockito)
+## Design System (Atomic Design)
+
+### O Atomic Design é uma metodologia criada por Brad Frost e que utiliza elementos da químida, como atomos e moléculas, para criar e separar elementos que são aplicados no design de interfaces.
+
+### https://atomicdesign.bradfrost.com/
+
+### Neste exemplo temos Widget do Desing System:
+
+```dart
+   return const ArchAppLoadingWidget();
+} else if (state is LoadedState) {
+   return ArchAppNetworkImage(path: state.dog.imageDog);
+```
+
+## Gerenciamento de estado BloC
+
+### BloC (Business Logic Component) é um padrão que adiciona reatividade aos componentes de uma aplicação e foi criado com o objetivo de separar regras de negócios e interface de usuário. O BloC auxilia no gerenciamento de estado da aplicação, tendo vantagem e desvantagens em sua aplicação, mas não é a única opção disponível, segue a lista que o Google apresenta no site oficial do Flutter:
+
+### https://docs.flutter.dev/development/data-and-backend/state-mgmt/options 
+
+```dart
+ImageDogBloc({required this.getImageDogUseCase}) : super(EmptyState()) {
+    on<GetImageDogEvent>((event, emit) async {
+      emit(LoadingState());
+      final errorOrImageDog = await getImageDogUseCase(NoParams());
+
+      await errorOrImageDog.fold(
+        (errorMessage) async {
+          emit(ErrorState(error: mapErrorsToMessage(errorMessage)));
+        },
+        (dogImage) async {
+          emit(LoadedState(dog: dogImage));
+        },
+      );
+    });
+}
+```
+
+## Injeção de Dependência
+
+### Utilização do package GetIt para melhorar o desacoplamento do aplicativo e auxiliar na realização dos testes unitários
+
+```dart
+  serviceLocator.registerLazySingleton<ImageDogRepository>(
+    () => ImageDogRepositoryImpl(dataSource: serviceLocator()),
+  );
+```
+<br>
+
+## Testes
+### TDD - testes unitários 
+### Testes com Coverage
+
+```dart
+ test(
+    'deve obter uma imagem do repositorio',
+    () async {
+      when(repository.getImageDog()).thenAnswer((_) async => Right(vModel));
+
+      final result = await usecase(NoParams());
+
+      expect(result, Right(vModel));
+      verify(repository.getImageDog());
+    
+    },
+  );
+```
+### Mock com [Mockito](https://pub.dev/packages/mockito)
+
+```dart
+test(
+      'deve retornar uma imagem de cachorro com sucesso',
+      () async {
+        when(datasourceMock.getImageDog()).thenAnswer((_) async => vModel);
+
+        final result = await repositoryMock.getImageDog();
+
+        verify(datasourceMock.getImageDog());
+
+        expect(result, equals(Right(vModel)));
+      },
+    );
+```
