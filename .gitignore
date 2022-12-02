@@ -32,6 +32,10 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Mock & Tests
+*.mocks.dart
+lcov.info
+
 # Web related
 lib/generated_plugin_registrant.dart
 
