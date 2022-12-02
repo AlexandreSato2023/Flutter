@@ -1,8 +1,8 @@
 import 'package:examplearch/features/image_dog/presentation/bloc/image_dog_bloc.dart';
 import 'package:examplearch/features/image_dog/presentation/widgets/control_get_dog_image.dart';
-import 'package:examplearch/features/image_dog/presentation/widgets/message_display.dart';
 import 'package:examplearch/service_locator.dart';
 import 'package:examplearch_design/atoms/loading_arch.dart';
+import 'package:examplearch_design/atoms/message_display.dart';
 import 'package:examplearch_design/molecules/image_network_arch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,7 +34,7 @@ class ImageDogPage extends StatelessWidget {
               BlocBuilder<ImageDogBloc, ImageDogState>(
                 builder: (context, state) {
                   if (state is EmptyState) {
-                    return const MessageDisplay(
+                    return const ArchAppMessageDisplay(
                       message: 'Start searching!',
                     );
                   } else if (state is LoadingState) {
@@ -42,7 +42,7 @@ class ImageDogPage extends StatelessWidget {
                   } else if (state is LoadedState) {
                     return ArchAppNetworkImage(path: state.dog.imageDog);
                   } else if (state is ErrorState) {
-                    return MessageDisplay(
+                    return ArchAppMessageDisplay(
                       message: state.error,
                     );
                   }

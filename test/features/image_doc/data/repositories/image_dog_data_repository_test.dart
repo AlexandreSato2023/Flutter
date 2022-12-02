@@ -2,17 +2,16 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:examplearch/core/errors/error_base.dart';
-import 'package:examplearch/features/image_dog/data/datasources/image_dog_datasource_impl.dart';
 import 'package:examplearch/features/image_dog/data/models/dog_dto.dart';
 import 'package:examplearch/features/image_dog/data/repositories/image_dog_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import '../../../../fixtures/fix_services.dart';
+import '../../domain/usecases/get_image_dog_usecase_test.mocks.dart';
 import 'image_dog_data_repository_test.mocks.dart';
 
 @GenerateMocks([ImageDogRepositoryImpl])
-@GenerateMocks([ImageDogDataSourceImpl])
 void main() {
   final datasourceMock = MockImageDogDataSourceImpl();
   final repositoryMock = ImageDogRepositoryImpl(dataSource: datasourceMock);

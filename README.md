@@ -93,8 +93,7 @@ ImageDogBloc({required this.getImageDogUseCase}) : super(EmptyState()) {
 <br>
 
 ## Testes
-### TDD - testes unitários 
-### Testes com Coverage
+### TDD - testes unitários - Coverage
 
 ```dart
  test(

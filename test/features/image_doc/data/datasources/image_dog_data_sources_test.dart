@@ -1,34 +1,47 @@
-import 'dart:convert';
-
+import 'package:dartz/dartz.dart';
+import 'package:examplearch/core/errors/error_base.dart';
 import 'package:examplearch/features/image_dog/data/datasources/image_dog_datasource_impl.dart';
-import 'package:examplearch/features/image_dog/data/models/dog_dto.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import '../../../../fixtures/fix_services.dart';
-import '../repositories/image_dog_data_repository_test.mocks.dart';
+
+import '../../domain/usecases/get_image_dog_usecase_test.mocks.dart';
 
 @GenerateMocks([ImageDogDataSourceImpl])
 void main() {
-  final mockImageDogDataSourceImpl = MockImageDogDataSourceImpl();
+
+  final imageDogDataSouceImpl = ImageDogDataSourceImpl(client: http.Client());
+  final datasourceMock = MockImageDogDataSourceImpl();
 
   group('obtem uma imagem de cachorro datasource', () {
-    final vModel = DogDTO.fromJson(json.decode(fixture('dog_image_json.json')));
-
+    
     test(
       'obtem uma imagem de cachorro do datasourcecom sucesso!',
       () async {
+        var ret = await imageDogDataSouceImpl.getImageDog();
 
-        when(mockImageDogDataSourceImpl.getImageDog()).thenAnswer((_) async => vModel);
-
-        var ret = await mockImageDogDataSourceImpl.getImageDog();
-
-        verify(mockImageDogDataSourceImpl.getImageDog());
-
-        expect(vModel, ret);
-        
+        expect(ret, isNotNull);
+        expect(ret.imageDog, isNotNull);
+        expect(ret.imageDog, isNotEmpty);       
         
       },
     );
+
+    test(
+      'obtem uma imagem de cachorro do datasourcecom com erro utilizando Mock!',
+      () async {
+
+      when(datasourceMock.getImageDog()).thenThrow((_) async => ServerErrors());
+
+      final result = await datasourceMock.getImageDog();
+
+      verify(datasourceMock.getImageDog());
+      expect(result, ServerErrors());
+      verifyNoMoreInteractions(datasourceMock);
+                
+      },
+    );
+
   });
 }

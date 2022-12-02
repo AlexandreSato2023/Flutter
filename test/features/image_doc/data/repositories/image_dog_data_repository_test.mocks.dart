@@ -3,19 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i7;
+import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i3;
-import 'package:examplearch/core/errors/error_base.dart' as _i8;
+import 'package:examplearch/core/errors/error_base.dart' as _i6;
 import 'package:examplearch/features/image_dog/data/datasources/image_dog_datasource.dart'
     as _i2;
-import 'package:examplearch/features/image_dog/data/datasources/image_dog_datasource_impl.dart'
-    as _i10;
-import 'package:examplearch/features/image_dog/data/models/dog_dto.dart' as _i5;
 import 'package:examplearch/features/image_dog/data/repositories/image_dog_repository_impl.dart'
-    as _i6;
-import 'package:examplearch/features/image_dog/domain/entities/dog.dart' as _i9;
-import 'package:http/http.dart' as _i4;
+    as _i4;
+import 'package:examplearch/features/image_dog/domain/entities/dog.dart' as _i7;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -50,31 +46,11 @@ class _FakeEither_1<L, R> extends _i1.SmartFake implements _i3.Either<L, R> {
         );
 }
 
-class _FakeClient_2 extends _i1.SmartFake implements _i4.Client {
-  _FakeClient_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeDogDTO_3 extends _i1.SmartFake implements _i5.DogDTO {
-  _FakeDogDTO_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
 /// A class which mocks [ImageDogRepositoryImpl].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockImageDogRepositoryImpl extends _i1.Mock
-    implements _i6.ImageDogRepositoryImpl {
+    implements _i4.ImageDogRepositoryImpl {
   MockImageDogRepositoryImpl() {
     _i1.throwOnMissingStub(this);
   }
@@ -88,52 +64,19 @@ class MockImageDogRepositoryImpl extends _i1.Mock
         ),
       ) as _i2.ImageDogDataSource);
   @override
-  _i7.Future<_i3.Either<_i8.ErrorBase, _i9.Dog>> getImageDog() =>
+  _i5.Future<_i3.Either<_i6.ErrorBase, _i7.Dog>> getImageDog() =>
       (super.noSuchMethod(
         Invocation.method(
           #getImageDog,
           [],
         ),
-        returnValue: _i7.Future<_i3.Either<_i8.ErrorBase, _i9.Dog>>.value(
-            _FakeEither_1<_i8.ErrorBase, _i9.Dog>(
+        returnValue: _i5.Future<_i3.Either<_i6.ErrorBase, _i7.Dog>>.value(
+            _FakeEither_1<_i6.ErrorBase, _i7.Dog>(
           this,
           Invocation.method(
             #getImageDog,
             [],
           ),
         )),
-      ) as _i7.Future<_i3.Either<_i8.ErrorBase, _i9.Dog>>);
-}
-
-/// A class which mocks [ImageDogDataSourceImpl].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockImageDogDataSourceImpl extends _i1.Mock
-    implements _i10.ImageDogDataSourceImpl {
-  MockImageDogDataSourceImpl() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i4.Client get client => (super.noSuchMethod(
-        Invocation.getter(#client),
-        returnValue: _FakeClient_2(
-          this,
-          Invocation.getter(#client),
-        ),
-      ) as _i4.Client);
-  @override
-  _i7.Future<_i5.DogDTO> getImageDog() => (super.noSuchMethod(
-        Invocation.method(
-          #getImageDog,
-          [],
-        ),
-        returnValue: _i7.Future<_i5.DogDTO>.value(_FakeDogDTO_3(
-          this,
-          Invocation.method(
-            #getImageDog,
-            [],
-          ),
-        )),
-      ) as _i7.Future<_i5.DogDTO>);
+      ) as _i5.Future<_i3.Either<_i6.ErrorBase, _i7.Dog>>);
 }
