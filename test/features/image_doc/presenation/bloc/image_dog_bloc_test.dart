@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:examplearch/core/errors/error_base.dart';
 import 'package:examplearch/core/usecase/usecase_base.dart';
 import 'package:examplearch/features/image_dog/domain/entities/dog.dart';
 import 'package:examplearch/features/image_dog/domain/usecases/get_image_dog_usecase.dart';
@@ -30,29 +31,6 @@ void main() {
   group('Obtem uma entidade DOG !', () {
     var dog = const Dog(imageDog: 'https://images.dog.ceo/breeds/poodle-standard/n02113799_5514.jpg');
 
-    
-
-    // test(
-    //   'Deve ficar com o estado [Loading, Loaded] quando tiver sucesso!',
-    //   () async {
-
-    //     when(mockGetImageDogUseCase!(NoParams())).thenAnswer((_) async => Right(dog));
-        
-    //     when(bloc!.state).thenReturn(EmptyState());
-
-    //     final expected = [
-    //       EmptyState(),
-    //       // LoadingState(),
-    //       // LoadedState(dog: dog),
-    //     ];
-
-    //     expectLater(bloc, emitsInOrder(expected));
-
-    //     bloc!.add(mockGetImageDogEvent!);        
-
-    //   },
-    // );
-
     test(
       'retorna a imagem do usecase com sucesso!',
       () async {
@@ -67,6 +45,11 @@ void main() {
         
       },
     );
+
+  
+
+    
+
 
   });
 }
