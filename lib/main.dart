@@ -1,5 +1,5 @@
 import 'package:examplearch/features/image_dog/presentation/pages/image_dog_page.dart';
-import 'package:examplearch_design/theme/wisecons_theme.dart';
+import 'package:examplearch_design/theme/archapp_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:examplearch/service_locator.dart' as service_locator;
 
