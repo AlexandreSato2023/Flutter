@@ -9,6 +9,8 @@ import 'package:mockito/mockito.dart';
 
 import '../../domain/usecases/get_image_dog_usecase_test.mocks.dart';
 
+
+
 @GenerateMocks([ImageDogDataSourceImpl])
 void main() {
   final imageDogDataSouceImpl = ImageDogDataSourceImpl(client: http.Client());
