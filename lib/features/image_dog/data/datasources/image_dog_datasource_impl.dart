@@ -14,6 +14,7 @@ class ImageDogDataSourceImpl implements ImageDogDataSource {
   Future<DogDTO> getImageDog() => _getImageDogFromUrl('https://dog.ceo/api/breeds/image/random');
 
   Future<DogDTO> _getImageDogFromUrl(String url) async {
+    
     final response = await client.get(
       Uri.parse(url),
       headers: {
@@ -24,6 +25,7 @@ class ImageDogDataSourceImpl implements ImageDogDataSource {
     if (response.statusCode == 200) {
       return DogDTO.fromJson(json.decode(response.body));
     } else {
+      
       throw ServerErrors();
     }
   }

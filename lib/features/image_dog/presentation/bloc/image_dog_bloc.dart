@@ -31,7 +31,7 @@ class ImageDogBloc extends Bloc<ImageDogEvent, ImageDogState> {
   String mapErrorsToMessage(ErrorBase erro) {
     switch (erro.runtimeType) {
       case ServerErrors:
-        return "Falha no servidor!";
+        return "Falha no servidor! $erro";
       default:
         return 'Erro desconhecido!';
     }
