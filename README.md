@@ -7,6 +7,12 @@
 
 <br>
 
+# Importante
+
+### Este é somente um exemplo, o cenário é simples, temos somente uma imagem sendo carregada na tela, o que não justifica a aplicação de uma arquitetura complexa e o over-engineering. Este exemplo representa um modelo inicial do Clean Architecture  mas não é uma regra. Cada projeto deve ser analisado individualmente e ter sua própria arquitetura baseada em suas necessidades específicas, que provavelmente serão diferentes das apresentadas neste modelo de exemplo.
+
+<br>
+
 # Clean Architecture
 
 ### Robert C. Martin foi o criador da Clean Architecture, que é uma das filosofias de arquiteturas disponíveis para o desenvolvimento de softwares. Com essa abordagem conseguimos produzir sistemas mais simples de testar de forma isolada e ao mesmo tempo, ficando mais independente de frameworks, UI, banco de dados e de qualquer agente externo.
