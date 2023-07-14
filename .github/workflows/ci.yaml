@@ -1,0 +1,114 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [ "master" ]
+    
+jobs:
+
+  version-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Fetch latest changes
+        run: git fetch origin master:master > /dev/null 2>&1
+
+      - name: Check Flutter project version
+        run: |
+          current_version=$(grep 'version:' pubspec.yaml | awk '{print $2}' | tr -d "'")
+          previous_version=$(git show "origin/master:pubspec.yaml" | grep 'version:' | awk '{print $2}' | tr -d "'")
+
+          IFS='.' read -r -a current_components <<< "${current_version%+*}"
+          IFS='.' read -r -a previous_components <<< "${previous_version%+*}"
+
+          current_build=${current_version##*+}
+          previous_build=${previous_version##*+}
+
+          is_major=$((current_components[0] > previous_components[0]))
+          is_minor=$((current_components[1] > previous_components[1]))
+          is_patch=$((current_components[2] > previous_components[2]))
+          is_build=$((current_build > previous_build))
+
+          if [ "$is_build" -eq 0 ]; then
+            echo "Error: Flutter project build number must be incremented."
+            exit 1
+          fi
+
+          if [ "$is_major" -eq 0 ] && [ "$is_minor" -eq 0 ] && [ "$is_patch" -eq 0 ]; then
+            echo "Error: Flutter project version has not been incremented."
+            exit 1
+          fi
+
+          echo "✅ Flutter version updated"
+
+  test:
+    needs: version-check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Run tests
+        run: flutter test
+
+  build-android:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Build APK
+        run: flutter build apk
+      
+      - name: Build App Bundle
+        run: flutter build appbundle
+
+  build-ios:
+    needs: test
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+          architecture: x64
+      
+      - name: Install dependencies
+        run: flutter pub get
+      
+      - name: Build iOS
+        run: flutter build ios --release --no-codesign
