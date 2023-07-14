@@ -60,6 +60,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Executa o Build Runner
+        run: flutter pub run build_runner build 
+
       - name: Run tests
         run: flutter test
 
